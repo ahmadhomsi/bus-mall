@@ -1,0 +1,18 @@
+#liftIMG {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 180px;
+}
+#rigtIMG {
+    margin: 5px;
+  border: 1px solid #ccc;
+  float:right;
+  width:180px;
+}
+.midelIMG {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: center;
+    width: 180px;
+}
