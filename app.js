@@ -7,18 +7,18 @@
 
 
 let imgPartt = [
-    
+
     'boots.jpg',
     'breakfast.jpg',
     'bubblegum.jpg',
-    'chari.jpg',
+    'chair.jpg',
     'cthulhu.jpg',
     'dog-duck.jpg',
     'dragon.jpg',
     'pen.jpg',
-    'pet-sweep(1).jpg',
     'pet-sweep.jpg',
     'scissors.jpg',
+    'sweep.png',
     'shark.jpg',
     'tauntaun.jpg',
     'unicorn.jpg',
@@ -36,12 +36,17 @@ const partimg = document.getElementById('partimg');
 const liftIMG = document.getElementById('liftIMG');
 const rigtIMG = document.getElementById('rigtIMG');
 const midelIMG = document.getElementById('midelIMG');
+const viewResult = document.getElementById('viewResult');
+const resultcontainer = document.getElementById('data');
 let number = 0;
+
 
 function photo(name) {
     this.name = name;
-    this.img = './img/${name}.jpg';
- photo.all.push(this);
+    this.img = `./img/${name}`;
+    this.clicks = 0;
+    this.shown = 0;
+    photo.all.push(this);
 }
 
 
@@ -55,33 +60,57 @@ for (let i = 0; i < imgPartt.length; i++) {
 
 
 
-
+partImg.addEventListener('click', eventHandalr);
 
 function eventHandalr(e) {
-    if ( (e.targrt.Id == 'liftIMeG' || e.taget.id == 'rigtIMG'
-        || e.taget.id == 'midelIMG') && number < 25) {
+    if ((e.target.id === 'liftIMG' || e.target.id === 'rigtIMG'
+        || e.target.id === 'midelIMG') && number < 25) {
         number++;
+
+
+        if (e.target.id === 'liftIMG') {
+            photo.all[firstImgIndex].clicks++;
+        }
+        if (e.target.id === 'midelIMG') {
+            photo.all[scandeImgIndex].clicks++;
+        }
+
+        if (e.target.id === 'rigtIMG') {
+            photo.all[therdImgIndex].clicks++;
+        }
+
         randomPhoto();
 
     } else {
         console.log('stoped');
     }
 }
+let firstImgIndex = 0;
+let scandeImgIndex = 0;
+let therdImgIndex = 0;
 
 
 function randomPhoto() {
     let liftIndex = randomNumber(0, imgPartt.length - 1);
-    let rigtIndex ;
-    let midelIndex ;
+    let rigtIndex;
+    let midelIndex;
 
-do { 
-    rigtIndex = randomNumber(0, imgPartt.length - 1);
-    midelIndex = randomNumber(0, imgPartt.length - 1);
-} while (liftIndex===rigtIndex)
+    do {
+        rigtIndex = randomNumber(0, imgPartt.length - 1);
+        midelIndex = randomNumber(0, imgPartt.length - 1);
+    } while (liftIndex === rigtIndex)
 
     liftIMG.src = photo.all[liftIndex].img;
-    rigtIMG.sec = photo.all[rigtIndex].img;
+    rigtIMG.src = photo.all[rigtIndex].img;
     midelIMG.src = photo.all[midelIndex].img;
+    firstImgIndex = liftIndex;
+    scandeImgIndex = rigtIndex;
+    therdImgIndex = midelIndex;
+
+
+    photo.all[liftIndex].shown++;
+    photo.all[rightIndex].shown++;
+    photo.all[midelIndex].shown++;
 
 
 
@@ -98,7 +127,20 @@ function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-partImg.addEventListener('click', eventHandalr);
+
 
 
 randomPhoto();
+function viewResultfunction() {
+    let ulE = document.createElement('ul');
+    resultcontainer.appendChild(ulE);
+
+    for (let i = 0; i < photo.all.length; i++) {
+        let liE = document.createElement('li');
+        ulE.appendChild(liE);
+        liE.textContent = `${photo.all[i].name.split('.')[0]}had a ${photo.all[i].clicks} votes,and was seen a ${photo.all[i].shown}.`;
+
+    }
+    viewResult.removeEventListener('click', viewResultfunction);
+}
+viewResult.addEventListener('click', viewResultfunction);
