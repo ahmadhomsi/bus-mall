@@ -82,7 +82,7 @@ function eventHandalr(e) {
         randomPhoto();
 
     } else {
-        console.log('stoped');
+        randerChart();
     }
 }
 let firstImgIndex = 0;
@@ -120,7 +120,6 @@ function randomPhoto() {
 
 
 
-
 function randomNumber(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -144,3 +143,42 @@ function viewResultfunction() {
     viewResult.removeEventListener('click', viewResultfunction);
 }
 viewResult.addEventListener('click', viewResultfunction);
+
+function randerChart() {
+
+
+    for (let i = 0; i < photo.all.length; i++) {
+        let clickNa = [];
+        let newName = [];
+        clickNa.push(photo.all[i].clicks);
+        newName.push(photo.all[i].name);
+    }
+    let ctx = document.getElementById('myChart').getContext('2d');
+    let myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: newName,
+            datasets: [{
+                label: '# of Votes',
+                data: clickNa,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    //myChart.destroy()
+}
