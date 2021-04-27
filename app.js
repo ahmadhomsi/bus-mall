@@ -109,7 +109,7 @@ function randomPhoto() {
 
 
     photo.all[liftIndex].shown++;
-    photo.all[rightIndex].shown++;
+    photo.all[rigtIndex].shown++;
     photo.all[midelIndex].shown++;
 
 
@@ -145,14 +145,23 @@ function viewResultfunction() {
 viewResult.addEventListener('click', viewResultfunction);
 
 function randerChart() {
-
+    console.log(photo.all);
+    let clickNa = [];
+    let newName = [];
+    let shown = [];
 
     for (let i = 0; i < photo.all.length; i++) {
-        let clickNa = [];
-        let newName = [];
+        // let clickNa = [];
+
+
         clickNa.push(photo.all[i].clicks);
         newName.push(photo.all[i].name);
+        shown.push(photo.all[i].shown);
+
+
     }
+    console.log(clickNa);
+    // console.log(newName);
     let ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(ctx, {
         type: 'bar',
@@ -170,7 +179,20 @@ function randerChart() {
 
                 ],
                 borderWidth: 1
-            }]
+            }, {
+                label: '# of shown',
+                data: shown,
+                backgroundColor: [
+                    'rgba(200, 99, 100, 0.2)',
+
+                ],
+                borderColor: [
+                    'rgba(200, 99, 100, 1)',
+
+                ],
+                borderWidth: 1
+            }
+            ]
         },
         options: {
             scales: {
