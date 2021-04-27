@@ -58,6 +58,21 @@ for (let i = 0; i < imgPartt.length; i++) {
 }
 
 
+function setItems() {
+    let photoString = JSON.stringify(photo.all);
+    localStorage.setItem('photo', photoString);
+}
+
+function getItems() {
+    let allItems = localStorage.getItem('photo');
+    let objectItems = JSON.parse(allItems);
+    if (objectItems !== null) {
+        photo.all = objectItems;
+
+    }
+}
+getItems();
+setItems();
 
 
 partImg.addEventListener('click', eventHandalr);
@@ -85,6 +100,7 @@ function eventHandalr(e) {
         randerChart();
     }
 }
+setItems();
 let firstImgIndex = 0;
 let scandeImgIndex = 0;
 let therdImgIndex = 0;
@@ -98,7 +114,11 @@ function randomPhoto() {
     do {
         rigtIndex = randomNumber(0, imgPartt.length - 1);
         midelIndex = randomNumber(0, imgPartt.length - 1);
-    } while (liftIndex === rigtIndex)
+    } while (liftIndex === rigtIndex) {
+        liftIndex = randomNumber(0, imgPartt.length - 1);
+    }
+    
+
 
     liftIMG.src = photo.all[liftIndex].img;
     rigtIMG.src = photo.all[rigtIndex].img;
@@ -204,3 +224,4 @@ function randerChart() {
     });
     //myChart.destroy()
 }
+
